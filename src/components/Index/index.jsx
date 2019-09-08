@@ -1,28 +1,22 @@
 ﻿import React, { Component } from "react";
-import axios from "axios";
 import styles from "./index.module.css";
 
-class Main extends Component {
-  state = {
-    todo:null}
-
+class Index extends Component {
+  
   componentDidMount(){
-    axios.get('https://jsonplaceholder.typicode.com/todos/1')
-    .then(res=>{
-        this.setState({
-            todo:res.data
-        })
-    })
-    .catch(err=>console.log(err))
+    
   }
 
   render() {
     return (
       <React.Fragment>
-        {this.state.todo ? <p>{this.state.todo.title}</p> : <p>Loading...</p>}
+        <form action="/Index" method="POST">
+          <textarea name="data" id="" cols="30" rows="20"></textarea>
+          <button action="submit">Submit</button>
+        </form>
       </React.Fragment>
     );
   }
 }
 
-export default Main;
+export default Index;

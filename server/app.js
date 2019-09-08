@@ -3,11 +3,12 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-
+const bodyParser = require('body-parser');
 const indexRouter = require("./routes/index");
-
 const app = express();
+const axios = require("axios")
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -15,6 +16,25 @@ app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "build")));
 
 app.use("/api", indexRouter);
+
+app.post('/Index', function (req, res) {
+  //res.send(req.body)
+  const request = {
+  "requestSend" : Date.now(),
+  "contents" : [req.body.data], 
+  "maxX": 100,
+  "minX": -100,
+  "timeout": 20000
+  }
+  axios.post('http://localhost:8080/calculate', request)
+  .then(function (response) {
+    res.json(response.data)
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+})
+
 app.get("*", (req, res) => {
   res.sendFile("build/index.html", { root: __dirname });
 });
@@ -39,5 +59,13 @@ if (process.env.NODE_ENV === "production") {
     res.send(err.message);
   });
 }
+
+
+
+// app.post('/', (request, response) => {
+//   const postBody = request.body;
+//   console.log(postBody);
+// });
+
 
 module.exports = app;
