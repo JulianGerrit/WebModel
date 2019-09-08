@@ -28,7 +28,7 @@ app.post('/Index', function (req, res) {
   }
   axios.post('http://localhost:8080/calculate', request)
   .then(function (response) {
-    res.json(response.data)
+    res.send(response.data)
   })
   .catch(function (error) {
     console.log(error);
