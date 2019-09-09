@@ -18,9 +18,11 @@ app.use(express.static(path.resolve(__dirname, "build")));
 app.use("/api", indexRouter);
 
 app.post('/Index', function (req, res) {
+  console.log("Starting values: "  + req.body.startingValues.split(/\r?\n/g))
+  console.log("Loop code: "  + req.body.loopCode.split(/\r?\n/g))
   const request = {
   "requestSend" : Date.now(),
-  "contents" : req.body.code.split(/\r?\n/g),
+  "contents" : req.body.loopCode.split(/\r?\n/g),
   "syntax" : req.body.syntax,
   "maxX": 100,
   "minX": -100,
