@@ -18,10 +18,10 @@ app.use(express.static(path.resolve(__dirname, "build")));
 app.use("/api", indexRouter);
 
 app.post('/Index', function (req, res) {
-  //res.send(req.body)
   const request = {
   "requestSend" : Date.now(),
-  "contents" : [req.body.data], 
+  "contents" : req.body.code.split(/\r?\n/g),
+  "syntax" : "python",
   "maxX": 100,
   "minX": -100,
   "timeout": 20000
