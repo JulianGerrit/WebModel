@@ -1,15 +1,23 @@
 ﻿import React, { Component } from "react";
 import styles from "./index.module.css";
+import AceEditor from 'react-ace';
+
+import 'brace/mode/c_cpp';
+import 'brace/mode/python';
+import 'brace/theme/solarized_dark';
+
 
 class Index extends Component {
   constructor() {
     super();
     this.state = { 
       code: null,
-      response: null
+      response: null,
+      syntax: "python"
       }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChangeEditor = this.handleChangeEditor.bind(this)
   }
 
   handleSubmit(event) {
@@ -39,12 +47,29 @@ class Index extends Component {
     });
   }
 
+  handleChangeEditor(newValue) {
+    this.setState({
+      code: newValue
+    });
+  }
 
   render() {
+
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-          <textarea name="code" onChange={this.handleChange} value={this.state.code} id="" cols="30" rows="10"></textarea>
+          <AceEditor 
+          mode={this.state.syntax} 
+          theme="solarized_dark" 
+          name="code" 
+          value={this.state.code ? this.state.code : ""}  
+          className={styles.editor} 
+          onChange={this.handleChangeEditor} 
+          />
+           Syntax: <select name="syntax" onChange={this.handleChange}>
+              <option value="python">Python</option>
+              <option value="c_cpp">C/C++</option>
+            </select>
           <button>Submit</button>
         </form>
         {this.state.response ? JSON.stringify(this.state.response) : <p></p>}
