@@ -22,8 +22,11 @@ app.post('/Index', function (req, res) {
   console.log("Loop code: "  + req.body.loopCode.split(/\r?\n/g))
   const request = {
   "requestSend" : Date.now(),
-  "contents" : req.body.loopCode.split(/\r?\n/g),
-  "syntax" : req.body.syntax,
+  "contents" : {
+    "lines": req.body.loopCode,
+    "argLines": req.body.startingValues,
+    "syntax": req.body.syntax
+  },
   "maxX": 100,
   "minX": -100,
   "timeout": 20000
@@ -61,13 +64,6 @@ if (process.env.NODE_ENV === "production") {
     res.send(err.message);
   });
 }
-
-
-
-// app.post('/', (request, response) => {
-//   const postBody = request.body;
-//   console.log(postBody);
-// });
 
 
 module.exports = app;
