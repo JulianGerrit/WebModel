@@ -18,8 +18,9 @@ app.use(express.static(path.resolve(__dirname, "build")));
 app.use("/api", indexRouter);
 
 app.post('/Index', function (req, res) {
-  console.log("Starting values: "  + req.body.startingValues.split(/\r?\n/g))
-  console.log("Loop code: "  + req.body.loopCode.split(/\r?\n/g))
+  console.log("Starting values:", req.body.startingValues.split(/\r?\n/g))
+  console.log("Loop code:", req.body.loopCode.split(/\r?\n/g))
+  console.log("Stop condition:", req.body.stopCondition)
   const request = {
   "requestSend" : Date.now(),
   "contents" : {

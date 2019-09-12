@@ -12,6 +12,7 @@ class Index extends Component {
   constructor() {
     super();
     this.state = { 
+      stopCondition: null,
       loopCode: null,
       startingValues: null,
       response: null,
@@ -62,17 +63,38 @@ class Index extends Component {
     });
   }
 
+  handleChangeStopConditions(newValue) { // only for the editor
+    this.setState({
+      stopCondition: newValue
+    });
+  }
+
   render() {
 
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
+          <label className={styles.stopConditionLabel}>Stop condition:</label>
+          <input type="text"
+            className={styles.stopCondition}
+            name="stopCondition"
+            value={this.stopCondition ? this.state.stopCondition : ""}
+            placeholder="Stop condition"
+            onchange={this.handleChangeStopConditions}
+          />
+          <label className={styles.syntaxLabel}>Syntax:</label> <select style={{ margin: 20 }}name="syntax" onChange={this.handleChange} classname={styles.selectSyntax}>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="c_cpp">C/C++</option>
+            </select>
 
+            <button className={styles.submitButton}>Submit</button>
+          <br/>
           <AceEditor 
             mode={this.state.syntax} 
             theme="cobalt" 
             name="code" 
-            value={this.state.loopCode ? this.state.loopCode : ""}  
+            value={this.state.loopCode ? this.state.loopCode : "Put your model loop here"}  
             className={styles.loopEditor} 
             onChange={this.handleChangeLoopEditor} 
           />
@@ -81,18 +103,12 @@ class Index extends Component {
             mode={this.state.syntax} 
             theme="cobalt" 
             name="code" 
-            value={this.state.startingValues ? this.state.startingValues : ""}
+            value={this.state.startingValues ? this.state.startingValues : "Define your start values here"}
             className={styles.startEditor} 
             onChange={this.handleChangeStartEditor} 
           />
-          <br/>
-            <label>Syntax:</label> <select style={{ margin: 20 }}name="syntax" onChange={this.handleChange}>
-              <option value="python">Python</option>
-              <option value="java">Java</option>
-              <option value="c_cpp">C/C++</option>
-            </select>
 
-            <button>Submit</button>
+            
         </form>
         {this.state.response ? JSON.stringify(this.state.response) : <p></p>}
       </React.Fragment>
