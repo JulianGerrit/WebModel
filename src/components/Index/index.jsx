@@ -18,10 +18,10 @@ class Index extends Component {
       response: null,
       syntax: "python"
       }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChangeLoopEditor = this.handleChangeLoopEditor.bind(this)
-    this.handleChangeStartEditor = this.handleChangeStartEditor.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeLoopEditor = this.handleChangeLoopEditor.bind(this);
+    this.handleChangeStartEditor = this.handleChangeStartEditor.bind(this);
   }
 
   handleSubmit(event) {
@@ -51,21 +51,15 @@ class Index extends Component {
     });
   }
 
-  handleChangeLoopEditor(newValue) { // only for the editor
+  handleChangeLoopEditor(newValue) {
     this.setState({
       loopCode: newValue
     });
   }
 
-  handleChangeStartEditor(newValue) { // only for the editor
+  handleChangeStartEditor(newValue) {
     this.setState({
       startingValues: newValue
-    });
-  }
-
-  handleChangeStopConditions(newValue) { // only for the editor
-    this.setState({
-      stopCondition: newValue
     });
   }
 
@@ -78,9 +72,9 @@ class Index extends Component {
           <input type="text"
             className={styles.stopCondition}
             name="stopCondition"
-            value={this.stopCondition ? this.state.stopCondition : ""}
+            value={this.state.stopCondition ? this.state.stopCondition : ""}
             placeholder="Boolean expression to stop calculations"
-            onchange={this.handleChangeStopConditions}
+            onChange={this.handleChange}
           />
           <label className={styles.syntaxLabel}>Syntax:</label> <select style={{ margin: 20 }}name="syntax" onChange={this.handleChange} classname={styles.selectSyntax}>
               <option value="python">Python</option>
@@ -94,7 +88,7 @@ class Index extends Component {
             mode={this.state.syntax} 
             theme="cobalt" 
             name="code" 
-            value={this.state.loopCode ? this.state.loopCode : "Put your model loop here"}  
+            value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.loopEditor} 
             onChange={this.handleChangeLoopEditor} 
           />
@@ -103,7 +97,7 @@ class Index extends Component {
             mode={this.state.syntax} 
             theme="cobalt" 
             name="code" 
-            value={this.state.startingValues ? this.state.startingValues : "Define your start values here"}
+            value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.startEditor} 
             onChange={this.handleChangeStartEditor} 
           />
