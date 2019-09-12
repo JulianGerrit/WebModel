@@ -86,7 +86,6 @@ class Index extends Component {
               <option value="python">Python</option>
               <option value="javascript">JavaScript</option>
               <option value="java">Java</option>
-              <option value="c_cpp">C/C++</option>
             </select>
 
             <button className={styles.submitButton}>Submit</button>
