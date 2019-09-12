@@ -4,7 +4,7 @@ import AceEditor from 'react-ace';
 
 import 'brace/mode/python';
 import 'brace/mode/java';
-import 'brace/mode/c_cpp';
+import 'brace/mode/javascript';
 import 'brace/theme/cobalt';
 
 
@@ -51,6 +51,7 @@ class Index extends Component {
     });
   }
 
+  // The editors need separate handleChange functions or it will error out
   handleChangeLoopEditor(newValue) {
     this.setState({
       loopCode: newValue
@@ -76,7 +77,8 @@ class Index extends Component {
             placeholder="Boolean expression to stop calculations"
             onChange={this.handleChange}
           />
-          <label className={styles.syntaxLabel}>Syntax:</label> <select style={{ margin: 20 }}name="syntax" onChange={this.handleChange} classname={styles.selectSyntax}>
+          <label className={styles.syntaxLabel}>Syntax:</label>
+          <select style={{ margin: 20 }} name="syntax" onChange={this.handleChange} className={styles.selectSyntax}>
               <option value="python">Python</option>
               <option value="javascript">JavaScript</option>
               <option value="java">Java</option>
@@ -87,24 +89,24 @@ class Index extends Component {
           <AceEditor 
             mode={this.state.syntax} 
             theme="cobalt" 
-            name="code" 
+            name="loopCode"
             value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.loopEditor} 
-            onChange={this.handleChangeLoopEditor} 
+            onChange={this.handleChangeLoopEditor}
           />
 
           <AceEditor 
             mode={this.state.syntax} 
             theme="cobalt" 
-            name="code" 
+            name="startingValues"
             value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.startEditor} 
-            onChange={this.handleChangeStartEditor} 
+            onChange={this.handleChangeStartEditor}
           />
 
             
         </form>
-        {this.state.response ? JSON.stringify(this.state.response) : <p></p>}
+        {this.state.response ? JSON.stringify(this.state.response) : ""}
       </React.Fragment>
     );
   }
