@@ -2,6 +2,7 @@
 
 # vscode configuration
 .vscode/
+.idea
 
 # testing
 /coverage
