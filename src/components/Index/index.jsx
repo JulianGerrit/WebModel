@@ -79,11 +79,12 @@ class Index extends Component {
             className={styles.stopCondition}
             name="stopCondition"
             value={this.stopCondition ? this.state.stopCondition : ""}
-            placeholder="Stop condition"
+            placeholder="Boolean expression to stop calculations"
             onchange={this.handleChangeStopConditions}
           />
           <label className={styles.syntaxLabel}>Syntax:</label> <select style={{ margin: 20 }}name="syntax" onChange={this.handleChange} classname={styles.selectSyntax}>
               <option value="python">Python</option>
+              <option value="javascript">JavaScript</option>
               <option value="java">Java</option>
               <option value="c_cpp">C/C++</option>
             </select>
