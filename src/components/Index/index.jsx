@@ -26,6 +26,11 @@ class Index extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    try {
+    if(!(this.state.stopCondition && this.state.loopCode && this.state.startingValues)) {
+      throw new Error("notFilledIn")
+    }
+
     fetch('/Index', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -39,6 +44,9 @@ class Index extends Component {
       })
         }
       );
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   handleChange(event) { // for any html
@@ -86,20 +94,20 @@ class Index extends Component {
 
             <button className={styles.submitButton}>Submit</button>
           <br/>
-          <AceEditor 
+          <AceEditor
             mode={this.state.syntax} 
             theme="cobalt" 
             name="loopCode"
-            value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
+            value={this.state.loopCode ? this.state.loopCode: ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.loopEditor} 
             onChange={this.handleChangeLoopEditor}
           />
 
-          <AceEditor 
+          <AceEditor
             mode={this.state.syntax} 
             theme="cobalt" 
             name="startingValues"
-            value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
+            value={this.state.startingValues ? this.state.startingValues: ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.startEditor} 
             onChange={this.handleChangeStartEditor}
           />
