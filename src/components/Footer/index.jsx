@@ -9,7 +9,16 @@ export default function Footer() {
           <div className="col-8 col-md-5">
             <h5 className={styles.title}>WebModel</h5>
             <p className={styles.description}>
-              This is placeholder text. Your web app description goes here.
+              <table>
+                <tr>
+                  <td>Data calculator by Freek.</td>
+                  <td>Web framework by Julian.</td>
+                </tr>
+                <tr>
+                  <td>Front-end styling by Alex.</td>
+                  <td>Documentation by Frank.</td>
+                </tr>
+              </table>
             </p>
           </div>
           <div className="col-2">

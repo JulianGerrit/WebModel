@@ -74,7 +74,7 @@ class Index extends Component {
             className={styles.stopCondition}
             name="stopCondition"
             value={this.state.stopCondition ? this.state.stopCondition : ""}
-            placeholder="Boolean expression to stop calculations"
+            placeholder="Boolean expression"
             onChange={this.handleChange}
           />
           <label className={styles.syntaxLabel}>Syntax:</label>

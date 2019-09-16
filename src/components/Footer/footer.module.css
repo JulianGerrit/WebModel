@@ -16,3 +16,7 @@
 .footerlink:hover {
   color: #fff;
 }
+
+td {
+  padding-left: 10px;
+}

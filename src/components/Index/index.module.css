@@ -27,7 +27,7 @@
 
 .loopEditor, .startEditor {
     display: inline-block;
-    margin-left: 35px;
+    margin: 16px;
 }
 
 .stopCondition {
