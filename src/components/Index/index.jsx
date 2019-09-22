@@ -92,6 +92,7 @@ class Index extends Component {
             value={this.state.loopCode ? this.state.loopCode: ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.loopEditor} 
             onChange={this.handleChangeLoopEditor}
+            width='45vw'
           />
 
           <AceEditor
@@ -101,6 +102,7 @@ class Index extends Component {
             value={this.state.startingValues ? this.state.startingValues: ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
             className={styles.startEditor} 
             onChange={this.handleChangeStartEditor}
+            width='45vw'
           />
 
             
