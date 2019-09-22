@@ -12,7 +12,6 @@ class Index extends Component {
   constructor() {
     super();
     this.state = { 
-      stopCondition: null,
       loopCode: null,
       startingValues: null,
       response: null,
@@ -27,7 +26,7 @@ class Index extends Component {
   handleSubmit(event) {
     event.preventDefault()
     try {
-    if(!(this.state.stopCondition && this.state.loopCode && this.state.startingValues)) {
+    if(!(this.state.loopCode && this.state.startingValues)) {
       throw new Error("notFilledIn")
     }
 
@@ -77,14 +76,6 @@ class Index extends Component {
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
-          <label className={styles.stopConditionLabel}>Stop condition:</label>
-          <input type="text"
-            className={styles.stopCondition}
-            name="stopCondition"
-            value={this.state.stopCondition ? this.state.stopCondition : ""}
-            placeholder="Boolean expression"
-            onChange={this.handleChange}
-          />
           <label className={styles.syntaxLabel}>Syntax:</label>
           <select style={{ margin: 20 }} name="syntax" onChange={this.handleChange} className={styles.selectSyntax}>
               <option value="python">Python</option>
