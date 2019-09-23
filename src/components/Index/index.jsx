@@ -1,6 +1,8 @@
 ﻿import React, { Component } from "react";
 import styles from "./index.module.css";
 import AceEditor from 'react-ace';
+import Popup from "reactjs-popup";
+import Graph from "./Graph"
 
 import 'brace/mode/python';
 import 'brace/mode/java';
@@ -82,8 +84,14 @@ class Index extends Component {
               <option value="javascript">JavaScript</option>
               <option value="java">Java</option>
             </select>
+            <Popup
+              trigger={<button className={styles.submitButton}>Submit</button>}
+              position="center top"
 
-            <button className={styles.submitButton}>Submit</button>
+            >
+                <Graph />
+            </Popup>
+
           <br/>
           <AceEditor
             mode={this.state.syntax} 
