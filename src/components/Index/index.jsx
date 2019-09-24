@@ -1,7 +1,8 @@
 ﻿import React, { Component } from "react";
 import styles from "./index.module.css";
 import AceEditor from 'react-ace';
-import Graph from "./Graph"
+import Graph from "./graph"
+import Loading from "./loading"
 
 import 'brace/mode/python';
 import 'brace/mode/java';
@@ -18,7 +19,7 @@ class Index extends Component {
       syntax: "python",
       response: null,
       stage: "editor"
-      }
+      };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeLoopEditor = this.handleChangeLoopEditor.bind(this);
@@ -140,7 +141,7 @@ class Index extends Component {
             <Graph res={this.state.response}/>
           </React.Fragment>)
     } else if (this.state.stage === "loading") {
-      return ("Loading...")
+      return (<Loading/>)
     }
   }
 }
