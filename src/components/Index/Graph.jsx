@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import styles from "./index.module.css";
+import Index from "./index"
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}];
- 
-export default class Graph extends Component {
-    render() {
-        return (
+
+export default (res) => (
             <React.Fragment>
                 <div>
                     <LineChart className="graphStyle" width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -15,7 +14,6 @@ export default class Graph extends Component {
                       <YAxis />
                     </LineChart>
                 </div>
+                {JSON.stringify(res)}
             </React.Fragment>
-        );
-    }
-}
+)
