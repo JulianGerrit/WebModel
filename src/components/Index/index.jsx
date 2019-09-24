@@ -35,7 +35,12 @@ class Index extends Component {
     fetch('/Index', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(this.state)
+      // body: JSON.stringify(this.state)
+      body: JSON.stringify({
+        loopCode: this.state.loopCode,
+        startingValues: this.state.startingValues,
+        syntax: this.state.syntax
+      })
     }
     ).then(res => res.json())
     .then(
