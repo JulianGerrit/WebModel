@@ -2,12 +2,12 @@
 import styles from "./index.module.css";
 import AceEditor from 'react-ace';
 import Graph from "./graph"
-import Loading from "./loading"
 
 import 'brace/mode/python';
 import 'brace/mode/java';
 import 'brace/mode/javascript';
 import 'brace/theme/cobalt';
+import LoadingOverlay from "react-loading-overlay";
 
 
 class Index extends Component {
@@ -97,9 +97,14 @@ class Index extends Component {
   }
 
   render() {
-    if (this.state.stage === "editor") {
+    if (this.state.stage === "editor" || this.state.stage === "loading") {
       return (
           <React.Fragment>
+            <LoadingOverlay
+                active={this.state.stage === "loading"}
+                spinner
+                text='Parsing data...'
+            >
                 {this.state.response ? <button onClick={this.backToGraph}>←Back to graph</button> : ""}
                 <form onSubmit={this.handleSubmit}>
                   <label className={styles.syntaxLabel}>Syntax:</label>
@@ -132,6 +137,7 @@ class Index extends Component {
                       width='45vw'
                   />
                 </form>
+            </LoadingOverlay>
           </React.Fragment>
       );
     } else if (this.state.stage === "graph") {
@@ -140,8 +146,6 @@ class Index extends Component {
             <button onClick={this.backToEditor}>←Back to editor</button>
             <Graph res={this.state.response}/>
           </React.Fragment>)
-    } else if (this.state.stage === "loading") {
-      return (<Loading/>)
     }
   }
 }
