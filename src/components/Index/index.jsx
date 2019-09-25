@@ -99,7 +99,6 @@ class Index extends Component {
   render() {
     if (this.state.stage === "editor" || this.state.stage === "loading") {
       return (
-          <React.Fragment>
             <LoadingOverlay
                 active={this.state.stage === "loading"}
                 spinner
@@ -138,7 +137,6 @@ class Index extends Component {
                   />
                 </form>
             </LoadingOverlay>
-          </React.Fragment>
       );
     } else if (this.state.stage === "graph") {
       return (
