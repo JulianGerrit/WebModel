@@ -1,13 +1,13 @@
 ﻿import React, { Component } from "react";
 import styles from "./index.module.css";
 import AceEditor from 'react-ace';
+import LoadingOverlay from "react-loading-overlay";
 import Graph from "./graph"
 
 import 'brace/mode/python';
 import 'brace/mode/java';
 import 'brace/mode/javascript';
 import 'brace/theme/cobalt';
-import LoadingOverlay from "react-loading-overlay";
 
 
 class Index extends Component {
