@@ -9,7 +9,6 @@ import 'brace/mode/java';
 import 'brace/mode/javascript';
 import 'brace/theme/cobalt';
 
-
 class Index extends Component {
   constructor() {
     super();
@@ -29,7 +28,7 @@ class Index extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     try {
     if(!(this.state.loopCode && this.state.startingValues)) {
       throw new Error("notFilledIn")
