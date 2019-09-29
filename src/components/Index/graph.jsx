@@ -48,7 +48,6 @@ const data = [
 
 export default (res) => (
             <React.Fragment>
-                <div>
                     <LineChart width={730} height={250} data={data}
                                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" />
@@ -59,7 +58,7 @@ export default (res) => (
                         <Line type="monotone" dataKey="pv" stroke="#8884d8" />
                         <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
                     </LineChart>
-                </div>
+                    <button>Export CSV</button>
                 {JSON.stringify(res)}
             </React.Fragment>
 )

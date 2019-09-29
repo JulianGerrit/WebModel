@@ -30,29 +30,36 @@ class Index extends Component {
   handleSubmit(event) {
     event.preventDefault();
     try {
-    if(!(this.state.loopCode && this.state.startingValues)) {
-      throw new Error("notFilledIn")
-    }
+      if(!(this.state.loopCode && this.state.startingValues)) {
+        throw new Error("notFilledIn")
+      }
 
-    this.setState({stage:"loading"});
+      this.setState({stage:"loading"});
 
-    fetch('/Index', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      // body: JSON.stringify(this.state)
-      body: JSON.stringify({
-        loopCode: this.state.loopCode,
-        startingValues: this.state.startingValues,
-        syntax: this.state.syntax
-      })
-    }
-    ).then(res => res.json())
-    .then(
-      (res) => {
-        this.setState({
-          response:res,
-          stage:"graph"
-      })
+      fetch('/Index', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        // body: JSON.stringify(this.state)
+        body: JSON.stringify({
+          loopCode: this.state.loopCode,
+          startingValues: this.state.startingValues,
+          syntax: this.state.syntax
+        })
+      }
+      ).then(res => res.json())
+      .then(
+        (res) => {
+          if (res.message === "Request failed with status code 500"){
+            this.setState({
+              response:res,
+              stage:"error"
+            })
+          } else {
+            this.setState({
+              response:res,
+              stage:"graph"
+            })
+          }
         }
       );
     } catch (e) {
@@ -96,27 +103,24 @@ class Index extends Component {
   }
 
   render() {
-    if (this.state.stage === "editor" || this.state.stage === "loading") {
+    if (this.state.stage === "editor" || this.state.stage === "loading" || this.state.stage === "error") {
       return (
             <LoadingOverlay
                 active={this.state.stage === "loading"}
                 spinner
                 text='Parsing data...'
             >
-                {this.state.response ? <button onClick={this.backToGraph}>←Back to graph</button> : ""}
+              {this.state.stage === "error" ? <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> : ""}
+                {this.state.response && this.state.stage !== "error" ? <button onClick={this.backToGraph}>←Back to graph</button> : ""}
                 <form onSubmit={this.handleSubmit}>
-                  <label className={styles.syntaxLabel}>Syntax:</label>
-                  <select style={{margin: 20}} name="syntax" onChange={this.handleChange}
-                          className={styles.selectSyntax}>
-                    <option value="python">Python</option>
-                    <option value="javascript">JavaScript</option>
-                    <option value="java">Java</option>
-                  </select>
                   <button className={styles.submitButton}>Submit</button>
-
                   <br/>
+                  <label className={styles.loopEditorLabel}>Model</label>
+                  <label className={styles.startEditorLabel}>Start instructions</label>
+                  <br/>
+
                   <AceEditor
-                      mode={this.state.syntax}
+                      mode="javascript"
                       theme="cobalt"
                       name="loopCode"
                       value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
@@ -126,7 +130,7 @@ class Index extends Component {
                   />
 
                   <AceEditor
-                      mode={this.state.syntax}
+                      mode="javascript"
                       theme="cobalt"
                       name="startingValues"
                       value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE

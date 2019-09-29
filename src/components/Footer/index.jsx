@@ -12,10 +12,10 @@ export default function Footer() {
               <table>
                 <tr>
                   <td>Data calculator by Freek.</td>
-                  <td>Web framework by Julian.</td>
+                  <td>Front-end by Julian.</td>
                 </tr>
                 <tr>
-                  <td>Front-end styling by Alex.</td>
+                  <td>Styling by Alex.</td>
                   <td>Documentation by Frank.</td>
                 </tr>
               </table>
@@ -24,6 +24,11 @@ export default function Footer() {
           <div className="col-2">
             <ul className="list-unstyled">
               <li>
+                <a className={styles.footerlink} href="https://webmodel.readthedocs.io/">
+                  Documentation
+                </a>
+              </li>
+              {/* <li>
                 <a className={styles.footerlink} href="/">
                   Example Link
                 </a>
@@ -32,12 +37,7 @@ export default function Footer() {
                 <a className={styles.footerlink} href="/">
                   Example Link
                 </a>
-              </li>
-              <li>
-                <a className={styles.footerlink} href="/">
-                  Example Link
-                </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

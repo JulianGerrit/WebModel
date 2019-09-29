@@ -14,11 +14,6 @@ export default function NavBar() {
         <Link className="navbar-brand" to="/">
           WebModel
         </Link>
-        <div className="navbar-nav">
-          <Link className="nav-item nav-link active" to="Index">
-            Index
-          </Link>
-        </div>
       </nav>
     </React.Fragment>
   );
