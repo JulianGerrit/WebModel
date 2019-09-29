@@ -18,18 +18,14 @@ app.use(express.static(path.resolve(__dirname, "build")));
 app.use("/api", indexRouter);
 
 app.post('/Index', function (req, res) {
-  console.log("Starting values:", req.body.startingValues.split(/\r?\n/g))
-  console.log("Loop code:", req.body.loopCode.split(/\r?\n/g))
+  // console.log("Starting values:", req.body.startingValues.split(/\r?\n/g))
+  // console.log("Loop code:", req.body.loopCode.split(/\r?\n/g))
   const request = {
-  "requestSend" : Date.now(),
-  "contents" : {
+    "timeout": 1000,
+    "send" : Date.now(),
+    "iterations": 100,
     "lines": req.body.loopCode,
     "argLines": req.body.startingValues,
-    "syntax": req.body.syntax
-  },
-  "maxX": 100,
-  "minX": -100,
-  "timeout": 20000
   }
   axios.post('http://localhost:8080/calculate', request)
   .then(function (response) {
