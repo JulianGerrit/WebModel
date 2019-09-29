@@ -1,7 +1,7 @@
 ﻿const CONSTANTS = { devServer: {
-    allowedHosts: [
-     'steen01.steenhq.com'
-    ]
+    disableHostCheck: true,
+    host: '0.0.0.0',
+    port: 3000
 }};
 
 CONSTANTS.PORT = process.env.PORT || "3001";
