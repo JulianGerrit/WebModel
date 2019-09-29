@@ -11,10 +11,8 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar />
-        <Switch>
           <Redirect exact path = "/" to = "/Index" />
           <Route path = "/Index" component = { Index } />
-        </Switch>
         <Footer />
       </React.Fragment>
     );

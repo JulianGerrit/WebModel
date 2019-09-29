@@ -5,8 +5,6 @@ import LoadingOverlay from "react-loading-overlay";
 import Graph from "./graph"
 
 import 'brace/mode/python';
-import 'brace/mode/java';
-import 'brace/mode/javascript';
 import 'brace/theme/cobalt';
 
 class Index extends Component {
@@ -120,7 +118,7 @@ class Index extends Component {
                   <br/>
 
                   <AceEditor
-                      mode="javascript"
+                      mode="python"
                       theme="cobalt"
                       name="loopCode"
                       value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
@@ -130,7 +128,7 @@ class Index extends Component {
                   />
 
                   <AceEditor
-                      mode="javascript"
+                      mode="python"
                       theme="cobalt"
                       name="startingValues"
                       value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
@@ -139,6 +137,8 @@ class Index extends Component {
                       width='45vw'
                   />
                 </form>
+                <button className={styles.submitButton}>Download model</button>
+                <button className={styles.submitButton}>Upload model</button>
             </LoadingOverlay>
       );
     } else if (this.state.stage === "graph") {
