@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import AceEditor from 'react-ace';
 import LoadingOverlay from "react-loading-overlay";
 import Graph from "./graph"
+import Download from '@axetroy/react-download';
 
 import 'brace/mode/python';
 import 'brace/theme/cobalt';
@@ -103,47 +104,51 @@ class Index extends Component {
   render() {
     if (this.state.stage === "editor" || this.state.stage === "loading" || this.state.stage === "error") {
       return (
-            <LoadingOverlay
-                active={this.state.stage === "loading"}
-                spinner
-                text='Parsing data...'
-            >
-              {this.state.stage === "error" ? <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> : ""}
-                <form onSubmit={this.handleSubmit}>
-                {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
-                  <button className={styles.submitButton}>Submit</button>
-                  <br/>
-                  <label className={styles.loopEditorLabel}>Model</label>
-                  <label className={styles.startEditorLabel}>Start instructions</label>
-                  <br/>
+        <LoadingOverlay
+            active={this.state.stage === "loading"}
+            spinner
+            text='Parsing data...'
+        >
+          {this.state.stage === "error" ? <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> : ""}
+            <form onSubmit={this.handleSubmit}>
+            {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
+              <button className={styles.submitButton}>Submit</button>
+              <br/>
+              <label className={styles.loopEditorLabel}>Model</label>
+              <label className={styles.startEditorLabel}>Start instructions</label>
+              <br/>
 
-                  <AceEditor
-                      mode="python"
-                      theme="cobalt"
-                      name="loopCode"
-                      value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
-                      className={styles.loopEditor}
-                      onChange={this.handleChangeLoopEditor}
-                      width='45vw'
-                  />
+              <AceEditor
+                id="loopCode"
+                mode="python"
+                theme="cobalt"
+                name="loopCode"
+                value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
+                className={styles.loopEditor}
+                onChange={this.handleChangeLoopEditor}
+                width='45vw'
+              />
 
-                  <AceEditor
-                      mode="python"
-                      theme="cobalt"
-                      name="startingValues"
-                      value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
-                      className={styles.startEditor}
-                      onChange={this.handleChangeStartEditor}
-                      width='45vw'
-                  />
-                </form>
-                <button className={styles.submitButton}>Download model</button>
-                <button className={styles.submitButton}>Upload model</button>
-            </LoadingOverlay>
+              <AceEditor
+                id="startingValues"
+                mode="python"
+                theme="cobalt"
+                name="startingValues"
+                value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
+                className={styles.startEditor}
+                onChange={this.handleChangeStartEditor}
+                width='45vw'
+              />
+            </form>
+            <Download
+              file="webmodel.json"
+              content={JSON.stringify({loopCode: this.state.loopCode, startingValues: this.state.startingValues})}>
+              <button className={styles.submitButton}>Download model</button>
+            </Download>
+            <button className={styles.submitButton}>Upload model</button>
+        </LoadingOverlay>
       );
     } else if (this.state.stage === "graph") {
-      // HIER JULIAN
-
       return (
           <React.Fragment>
             <button className={styles.submitButton} onClick={this.backToEditor}>←Back to editor</button>

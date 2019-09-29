@@ -19,6 +19,7 @@ export default function Footer() {
                   <td>Documentation by Frank.</td>
                 </tr>
               </table>
+              © 2019 Julian Gerritsen
             </p>
           </div>
           <div className="col-2">
