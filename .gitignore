@@ -21,8 +21,8 @@ yarn-error.log*
 
 
 # production
+/server/build
 /build
-
 
 # dependencies
 /node_modules
