@@ -1,64 +1,48 @@
-import React from "react";
+import React, { Component } from "react";
 import styles from "./index.module.css";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-const data = [
-    {
-        "name": "Page A",
-        "uv": 4000,
-        "pv": 2400,
-        "amt": 2400
-    },
-    {
-        "name": "Page B",
-        "uv": 3000,
-        "pv": 1398,
-        "amt": 2210
-    },
-    {
-        "name": "Page C",
-        "uv": 2000,
-        "pv": 9800,
-        "amt": 2290
-    },
-    {
-        "name": "Page D",
-        "uv": 2780,
-        "pv": 3908,
-        "amt": 2000
-    },
-    {
-        "name": "Page E",
-        "uv": 1890,
-        "pv": 4800,
-        "amt": 2181
-    },
-    {
-        "name": "Page F",
-        "uv": 2390,
-        "pv": 3800,
-        "amt": 2500
-    },
-    {
-        "name": "Page G",
-        "uv": 3490,
-        "pv": 4300,
-        "amt": 2100
-    }
-]
+import {ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+  
 
-export default (res) => (
+export default class Graph extends Component {
+
+    render() {
+        let components = [];
+        for(var line of this.props.res.vars){
+            var lineData = [];
+            for (var i = 0; i < line.data.length; i++) {
+                lineData.push({x: i, y: line.data[i]});
+            } 
+            components.push(<Scatter name={line.name} data={lineData} fill={line.color.hex} line />);
+        }
+        return (
             <React.Fragment>
-                    <LineChart width={730} height={250} data={data}
-                               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                    </LineChart>
-                    <button>Export CSV</button>
-                {JSON.stringify(res)}
+                    <ScatterChart
+                        width={500}
+                        height={400}
+                        margin={{
+                        top: 20, right: 20, bottom: 20, left: 20,
+                        }}
+                    >
+                        <CartesianGrid />
+                        <XAxis type="number" dataKey="x" name="stature"  />
+                        <YAxis type="number" dataKey="y" name="weight" />
+                        {/* <ZAxis type="number" range={[100]} /> */}
+                        {components}
+                    </ScatterChart>
+
+                    <button className={styles.submitButton}>Export CSV</button>
+                {/* {JSON.stringify(this.props.res)} */}
+                {/* <br/>
+                {this.props.res.vars[0].color.data} */}
             </React.Fragment>
-)
+        )
+    }
+}
+
+// {
+//     let components = [];
+//     for(var i = 1;i<myfields.length;i++) {
+//         components.push(<TableHeaderColumn dataField={myfields[i]} dataSort={ true } width='15' dataAlign='left' headerAlign='left'>{myfields[i]}</TableHeaderColumn>);
+//     }
+//     return components;
+// }

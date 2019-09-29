@@ -24,7 +24,7 @@ export default function Footer() {
           <div className="col-2">
             <ul className="list-unstyled">
               <li>
-                <a className={styles.footerlink} href="https://webmodel.readthedocs.io/">
+                <a className={styles.footerlink} target="_BLANK" rel="noopener noreferrer" href="https://webmodel.readthedocs.io/">
                   Documentation
                 </a>
               </li>

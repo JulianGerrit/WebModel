@@ -109,8 +109,8 @@ class Index extends Component {
                 text='Parsing data...'
             >
               {this.state.stage === "error" ? <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> : ""}
-                {this.state.response && this.state.stage !== "error" ? <button onClick={this.backToGraph}>←Back to graph</button> : ""}
                 <form onSubmit={this.handleSubmit}>
+                {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
                   <button className={styles.submitButton}>Submit</button>
                   <br/>
                   <label className={styles.loopEditorLabel}>Model</label>
@@ -142,9 +142,11 @@ class Index extends Component {
             </LoadingOverlay>
       );
     } else if (this.state.stage === "graph") {
+      // HIER JULIAN
+
       return (
           <React.Fragment>
-            <button onClick={this.backToEditor}>←Back to editor</button>
+            <button className={styles.submitButton} onClick={this.backToEditor}>←Back to editor</button>
             <Graph res={this.state.response}/>
           </React.Fragment>)
     }

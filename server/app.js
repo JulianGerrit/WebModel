@@ -32,7 +32,6 @@ app.post('/Index', function (req, res) {
     res.send(response.data)
   })
   .catch(function (error) {
-    console.log(error);
     res.send(error);
   });
 })
