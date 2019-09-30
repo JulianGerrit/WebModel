@@ -88,6 +88,11 @@ class Index extends Component {
       startingValues: newValue
     });
   }
+  handleChangeStartXAxis(newValue) {
+    this.setState({
+      xAxisVariable: newValue
+    });
+  }
 
   backToEditor(){
     this.setState({
@@ -113,9 +118,14 @@ class Index extends Component {
             <form onSubmit={this.handleSubmit}>
             {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
               <button className={styles.submitButton}>Submit</button>
+              <label className={styles.xAxisLabel}>X-axis variable:</label>
+              <input className="text" placeholder="x" type="text"></input>
               <br/>
               <label className={styles.loopEditorLabel}>Model</label>
-              <label className={styles.startEditorLabel}>Start instructions</label>
+              <label
+                className={styles.startEditorLabel}
+                onChange={this.handleChangeStartXAxis}
+              >Start instructions</label>
               <br/>
 
               <AceEditor

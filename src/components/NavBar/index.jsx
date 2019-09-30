@@ -15,6 +15,9 @@ export default function NavBar() {
           <img className={styles.icon} src="favicon.ico" />
           WebModel
         </Link>
+        <div className="navbar-nav">
+          <a className="nav-item nav-link active" target="_blank" rel="noopener noreferrer" href="https://webmodel.readthedocs.io/">Help</a>
+        </div>
       </nav>
     </React.Fragment>
   );
