@@ -14,6 +14,7 @@ class Index extends Component {
     this.state = { 
       loopCode: null,
       startingValues: null,
+      xAxis: null,
       syntax: "python",
       response: null,
       stage: "editor"
@@ -66,7 +67,7 @@ class Index extends Component {
     }
   }
 
-  handleChange(event) { // for any html
+  handleChange(event) { // ALWAYS try using this change handler first before making a seperate one line below
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -82,17 +83,12 @@ class Index extends Component {
       loopCode: newValue
     });
   }
-
   handleChangeStartEditor(newValue) {
     this.setState({
       startingValues: newValue
     });
   }
-  handleChangeStartXAxis(newValue) {
-    this.setState({
-      xAxisVariable: newValue
-    });
-  }
+
 
   backToEditor(){
     this.setState({
@@ -119,13 +115,10 @@ class Index extends Component {
             {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
               <button className={styles.submitButton}>Submit</button>
               <label className={styles.xAxisLabel}>X-axis variable:</label>
-              <input className="text" placeholder="x" type="text"></input>
+              <input  onChange={this.handleChange} placeholder="x" name="xAxis" type="text"></input>
               <br/>
               <label className={styles.loopEditorLabel}>Model</label>
-              <label
-                className={styles.startEditorLabel}
-                onChange={this.handleChangeStartXAxis}
-              >Start instructions</label>
+              <label className={styles.startEditorLabel}>Start instructions</label>
               <br/>
 
               <AceEditor
@@ -133,7 +126,7 @@ class Index extends Component {
                 mode="python"
                 theme="cobalt"
                 name="loopCode"
-                value={this.state.loopCode ? this.state.loopCode : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
+                value={this.state.loopCode ? this.state.loopCode : ""}
                 className={styles.loopEditor}
                 onChange={this.handleChangeLoopEditor}
                 width='45vw'
@@ -144,7 +137,7 @@ class Index extends Component {
                 mode="python"
                 theme="cobalt"
                 name="startingValues"
-                value={this.state.startingValues ? this.state.startingValues : ""} // die haakjes moeten leeg zijn Alex anders komt wat er in staat elke keer terug als je het weghaalt in de IDE
+                value={this.state.startingValues ? this.state.startingValues : ""}
                 className={styles.startEditor}
                 onChange={this.handleChangeStartEditor}
                 width='45vw'
@@ -162,7 +155,7 @@ class Index extends Component {
       return (
           <React.Fragment>
             <button className={styles.submitButton} onClick={this.backToEditor}>←Back to editor</button>
-            <Graph res={this.state.response}/>
+            <Graph res={this.state.response} xAxis={this.state.xAxis}/>
           </React.Fragment>)
     }
   }
