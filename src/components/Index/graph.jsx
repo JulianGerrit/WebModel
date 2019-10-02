@@ -8,14 +8,12 @@ export default class Graph extends Component {
     render() {
 
         let vars = this.props.res.vars;
-
+        // console.log(vars)
         let result =[];
         let xAxis;
 
-        //TODO Implement this.props.xAxis. Didn't work because it's not initialized.
-
         for(let a of vars) {
-            if(a.name === "x") {
+            if(a.name === this.props.xAxis) {
                 xAxis = a;
                 break;
             }
@@ -30,15 +28,15 @@ export default class Graph extends Component {
 
         for(let line of vars) {
             let xdata = [];
-            if(line === xAxis) continue;
-
-            for (let i = 0; i < line.data.length; i++) {
-                let dx = xAxis.data[i];
-                let dy = line.data[i];
-                console.log(dx + ",  " + dy +  "")
-                xdata.push({x: xAxis.data[i], y: line.data[i]})
+            if(line !== xAxis) {
+                for (let i = 0; i < line.data.length; i++) {
+                    // let dx = xAxis.data[i];
+                    // let dy = line.data[i];
+                    // console.log(dx + ",  " + dy +  "")
+                    xdata.push({x: xAxis.data[i], y: line.data[i]})
+                }
+                result.push(<Scatter name={line.name} data={xdata} fill={line.color.hex} line/>)
             }
-            result.push(<Scatter name={line.name} data={xdata} fill={line.color.hex} line/>)
         }
             return (
                 <React.Fragment>

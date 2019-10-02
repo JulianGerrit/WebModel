@@ -30,7 +30,7 @@ class Index extends Component {
   handleSubmit(event) {
     event.preventDefault();
     try {
-      if(!(this.state.loopCode && this.state.startingValues)) {
+      if(!(this.state.loopCode && this.state.startingValues && this.state.xAxis)) {
         throw new Error("notFilledIn")
       }
 
