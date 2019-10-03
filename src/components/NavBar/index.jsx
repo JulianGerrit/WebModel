@@ -12,7 +12,7 @@ export default function NavBar() {
       </div>
       <nav className="navbar navbar-expand-sm navbar-light border-bottom justify-content-between">
         <Link className="navbar-brand" to="/">
-          <img className={styles.icon} src="favicon.ico" />
+          <img className={styles.icon} alt="logo" src="favicon.ico" />
           WebModel
         </Link>
         <div className="navbar-nav">

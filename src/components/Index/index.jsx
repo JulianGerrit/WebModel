@@ -112,11 +112,8 @@ class Index extends Component {
           spinner
           text='Parsing data...'
         >
-          {this.state.error ? 
-            this.state.error === "syntax" ? 
-            <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> :
-            ""/*other error checks here*/:
-          ""}
+          {this.state.error === "syntax" ? 
+          <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> : ""}
           <form onSubmit={this.handleSubmit}>
             {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
               <button className={styles.submitButton}>Submit</button>
