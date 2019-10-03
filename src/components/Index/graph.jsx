@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import styles from "./index.module.css";
-import {ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {ScatterChart, Scatter, XAxis, YAxis, CartesianGrid} from 'recharts';
 
 
 export default class Graph extends Component {

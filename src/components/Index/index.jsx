@@ -17,7 +17,8 @@ class Index extends Component {
       xAxis: null,
       syntax: "python",
       response: null,
-      stage: "editor"
+      stage: "editor",
+      error: null
       };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,7 +40,6 @@ class Index extends Component {
       fetch('/Index', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        // body: JSON.stringify(this.state)
         body: JSON.stringify({
           loopCode: this.state.loopCode,
           startingValues: this.state.startingValues,
@@ -52,11 +52,13 @@ class Index extends Component {
           if (res.message === "Request failed with status code 500"){
             this.setState({
               response:res,
-              stage:"error"
+              stage: "editor",
+              error:"syntax"
             })
           } else {
             this.setState({
               response:res,
+              error: null,
               stage:"graph"
             })
           }
@@ -103,15 +105,19 @@ class Index extends Component {
   }
 
   render() {
-    if (this.state.stage === "editor" || this.state.stage === "loading" || this.state.stage === "error") {
+    if (this.state.stage === "editor" || this.state.stage === "loading" || this.state.error) {
       return (
         <LoadingOverlay
-            active={this.state.stage === "loading"}
-            spinner
-            text='Parsing data...'
+          active={this.state.stage === "loading"}
+          spinner
+          text='Parsing data...'
         >
-          {this.state.stage === "error" ? <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> : ""}
-            <form onSubmit={this.handleSubmit}>
+          {this.state.error ? 
+            this.state.error === "syntax" ? 
+            <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> :
+            ""/*other error checks here*/:
+          ""}
+          <form onSubmit={this.handleSubmit}>
             {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
               <button className={styles.submitButton}>Submit</button>
               <label className={styles.xAxisLabel}>X-axis variable:</label>
