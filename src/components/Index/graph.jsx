@@ -9,38 +9,17 @@ export default class Graph extends Component {
 
         let vars = this.props.res.vars;
         let result =[];
-        let xAxis;
+        let xAxis = this.props.xAxis;
 
-        try {
-            for(let a of vars) {
-                if(a.name === this.props.xAxis) {
-                    xAxis = a;
-                    break;
-                }
-            }
-            if(xAxis == null) {
-                return (
-                    <React.Fragment>
-                        <p>Defined x-axis variable {this.props.xAxis} is not in data.</p>
-                        {this.props.res.vars ? JSON.stringify(this.props.res.vars) : ""}
-                    </React.Fragment>);
-            }
 
-            for(let line of vars) {
-                let xdata = [];
-                if(line !== xAxis) {
-                    for (let i = 0; i < line.data.length; i++) {
-                        xdata.push({x: xAxis.data[i], y: line.data[i]})
-                    }
-                    result.push(<Scatter name={line.name} data={xdata} fill={line.color.hex} line/>)
+        for(let line of vars) {
+            let xdata = [];
+            if(line !== xAxis) {
+                for (let i = 0; i < line.data.length; i++) {
+                    xdata.push({x: xAxis.data[i], y: line.data[i]})
                 }
+                result.push(<Scatter name={line.name} data={xdata} fill={line.color.hex} line/>)
             }
-        } catch (e) {
-            return(
-                <React.Fragment>
-                    <p>Calculation server error</p>
-                </React.Fragment>
-            )
         }
             return (
                 <React.Fragment>

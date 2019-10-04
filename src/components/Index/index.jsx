@@ -15,6 +15,7 @@ class Index extends Component {
       loopCode: null,
       startingValues: null,
       xAxis: null,
+      xAxisRes: null,
       syntax: "python",
       response: null,
       stage: "editor",
@@ -56,11 +57,38 @@ class Index extends Component {
               error:"syntax"
             })
           } else {
-            this.setState({
-              response:res,
-              error: null,
-              stage:"graph"
-            })
+            this.setState({xAxisRes: null})
+            try{ 
+              for(let a of res.vars) {
+                if(a.name === this.state.xAxis) {
+                    this.setState({xAxisRes: a})
+                    break;
+                }
+              }
+              
+              if(!this.state.xAxisRes) {
+                this.setState({
+                  response:res,
+                  error: "x",
+                  stage: "editor"
+                })
+              } else {
+                this.setState({
+                  response:res,
+                  error: null,
+                  stage:"graph"
+                })
+              }
+
+            } catch(e) {
+              this.setState({
+                response:res,
+                stage:"editor",
+                error: "server"
+              })
+            }
+          
+            
           }
         }
       );
@@ -105,7 +133,7 @@ class Index extends Component {
   }
 
   render() {
-    if (this.state.stage === "editor" || this.state.stage === "loading" || this.state.error) {
+    if (this.state.stage === "editor" || this.state.stage === "loading") {
       return (
         <LoadingOverlay
           active={this.state.stage === "loading"}
@@ -113,9 +141,19 @@ class Index extends Component {
           text='Parsing data...'
         >
           {this.state.error === "syntax" ? 
-          <div class="alert alert-danger" role="alert"> Syntax error, please try again. </div> : ""}
+          <div className="alert alert-danger" role="alert"> Syntax error, please try again. </div>
+          : ""}
+
+          {this.state.error === "x" ? 
+          <div className="alert alert-danger" role="alert"> Defined x-axis variable {this.state.xAxis} is not in data. please try again</div>
+          :""}
+
+          {this.state.error === "server" ? 
+          <div className="alert alert-danger" role="alert"> Internal server error, please try again </div>
+          :""}
+
           <form onSubmit={this.handleSubmit}>
-            {this.state.response && this.state.stage !== "error" ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
+            {this.state.response && !this.state.error ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
               <button className={styles.submitButton}>Submit</button>
               <label className={styles.xAxisLabel}>X-axis variable:</label>
               <input  onChange={this.handleChange} placeholder="x" name="xAxis" type="text"></input>
@@ -158,7 +196,7 @@ class Index extends Component {
       return (
           <React.Fragment>
             <button className={styles.submitButton} onClick={this.backToEditor}>←Back to editor</button>
-            <Graph res={this.state.response} xAxis={this.state.xAxis}/>
+            <Graph res={this.state.response} xAxis={this.state.xAxisRes}/>
           </React.Fragment>)
     }
   }
