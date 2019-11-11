@@ -4,6 +4,7 @@ import AceEditor from 'react-ace';
 import LoadingOverlay from "react-loading-overlay";
 import Graph from "./graph"
 import Download from '@axetroy/react-download';
+import FileInput from './upload';
 
 import 'brace/mode/python';
 import 'brace/theme/cobalt';
@@ -27,6 +28,8 @@ class Index extends Component {
     this.handleChangeStartEditor = this.handleChangeStartEditor.bind(this);
     this.backToEditor = this.backToEditor.bind(this);
     this.backToGraph = this.backToGraph.bind(this);
+    this.loopEditorRef = React.createRef();
+    this.startEditorRef = React.createRef();
   }
 
   handleSubmit(event) {
@@ -113,6 +116,7 @@ class Index extends Component {
       loopCode: newValue
     });
   }
+
   handleChangeStartEditor(newValue) {
     this.setState({
       startingValues: newValue
@@ -164,6 +168,7 @@ class Index extends Component {
 
               <AceEditor
                 id="loopCode"
+                ref={this.loopEditorRef}
                 mode="python"
                 theme="cobalt"
                 name="loopCode"
@@ -175,6 +180,7 @@ class Index extends Component {
 
               <AceEditor
                 id="startingValues"
+                ref={this.startEditorRef}
                 mode="python"
                 theme="cobalt"
                 name="startingValues"
@@ -189,7 +195,13 @@ class Index extends Component {
               content={JSON.stringify({loopCode: this.state.loopCode, startingValues: this.state.startingValues})}>
               <button className={styles.submitButton}>Download model</button>
             </Download>
-            <button className={styles.submitButton}>Upload model</button>
+            
+            <FileInput
+              loopEditor={this.loopEditorRef.current}
+              startEditor={this.startEditorRef.current}
+            />
+
+              
         </LoadingOverlay>
       );
     } else if (this.state.stage === "graph") {
