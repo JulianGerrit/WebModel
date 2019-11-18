@@ -4,7 +4,6 @@ import AceEditor from 'react-ace';
 import LoadingOverlay from "react-loading-overlay";
 import Graph from "./graph"
 import Download from '@axetroy/react-download';
-import FileInput from './upload';
 
 import 'brace/mode/python';
 import 'brace/theme/cobalt';
@@ -22,14 +21,13 @@ class Index extends Component {
       stage: "editor",
       error: null
       };
+    this.uploadFile = this.uploadFile.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeLoopEditor = this.handleChangeLoopEditor.bind(this);
     this.handleChangeStartEditor = this.handleChangeStartEditor.bind(this);
     this.backToEditor = this.backToEditor.bind(this);
     this.backToGraph = this.backToGraph.bind(this);
-    this.loopEditorRef = React.createRef();
-    this.startEditorRef = React.createRef();
   }
 
   handleSubmit(event) {
@@ -136,6 +134,23 @@ class Index extends Component {
     });
   }
 
+  uploadFile(event) { 
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    var that = this;
+    
+    
+    reader.onload = function(evt) {
+        var parsedFile = JSON.parse(evt.target.result);
+        console.log(JSON.parse(evt.target.result));
+        that.setState({
+          loopCode: parsedFile.loopCode,
+          startingValues: parsedFile.startingValues
+        });
+    };
+    reader.readAsText(file);
+}
+
   render() {
     if (this.state.stage === "editor" || this.state.stage === "loading") {
       return (
@@ -168,7 +183,6 @@ class Index extends Component {
 
               <AceEditor
                 id="loopCode"
-                ref={this.loopEditorRef}
                 mode="python"
                 theme="cobalt"
                 name="loopCode"
@@ -180,7 +194,6 @@ class Index extends Component {
 
               <AceEditor
                 id="startingValues"
-                ref={this.startEditorRef}
                 mode="python"
                 theme="cobalt"
                 name="startingValues"
@@ -196,12 +209,13 @@ class Index extends Component {
               <button className={styles.submitButton}>Download model</button>
             </Download>
             
-            <FileInput
-              loopEditor={this.loopEditorRef.current}
-              startEditor={this.startEditorRef.current}
+            <input type="file"
+            name="myFile"
+            className={styles.submitButton}
+            onChange={this.uploadFile}
             />
+            
 
-              
         </LoadingOverlay>
       );
     } else if (this.state.stage === "graph") {
