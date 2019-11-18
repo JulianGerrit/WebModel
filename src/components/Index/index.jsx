@@ -14,8 +14,7 @@ class Index extends Component {
     this.state = { 
       loopCode: null,
       startingValues: null,
-      xAxis: null,
-      xAxisRes: null,
+      // xAxisRes: null,
       syntax: "python",
       response: null,
       stage: "editor",
@@ -33,7 +32,7 @@ class Index extends Component {
   handleSubmit(event) {
     event.preventDefault();
     try {
-      if(!(this.state.loopCode && this.state.startingValues && this.state.xAxis)) {
+      if(!(this.state.loopCode && this.state.startingValues)) {
         throw new Error("notFilledIn")
       }
 
@@ -51,43 +50,46 @@ class Index extends Component {
       ).then(res => res.json())
       .then(
         (res) => {
+          // je kan gewoon zien dat freek dit heeft geschreven aangezien er geen semicolons gebruikt zijn
+          console.log(res);
           if (res.message === "Request failed with status code 500"){
             this.setState({
-              response:res,
+              response: res,
               stage: "editor",
               error:"syntax"
             })
           } else {
-            this.setState({xAxisRes: null})
-            try{ 
-              for(let a of res.vars) {
-                if(a.name === this.state.xAxis) {
-                    this.setState({xAxisRes: a})
-                    break;
-                }
-              }
+            // this.setState({xAxisRes: null})
+            // try{ 
+              // for(let a of res.vars){
+              //   if(a.axis === true)
+              //   if(a.name === this.state.xAxis) {
+              //       this.setState({xAxisRes: a});
+              //       break;
+              //   }
+              // }
               
-              if(!this.state.xAxisRes) {
-                this.setState({
-                  response:res,
-                  error: "x",
-                  stage: "editor"
-                })
-              } else {
+              // if(!this.state.xAxisRes) {
+              //   this.setState({
+              //     response:res,
+              //     error: "x",
+              //     stage: "editor"
+              //   })
+              // } else {
                 this.setState({
                   response:res,
                   error: null,
                   stage:"graph"
-                })
-              }
+                });
+              // }
 
-            } catch(e) {
-              this.setState({
-                response:res,
-                stage:"editor",
-                error: "server"
-              })
-            }
+            // } catch(e) {
+              // this.setState({
+                // response:res,
+                // stage:"editor",
+                // error: "server"
+              // });
+            // }
           
             
           }
@@ -142,7 +144,7 @@ class Index extends Component {
     
     reader.onload = function(evt) {
         var parsedFile = JSON.parse(evt.target.result);
-        console.log(JSON.parse(evt.target.result));
+        // console.log(JSON.parse(evt.target.result));
         that.setState({
           loopCode: parsedFile.loopCode,
           startingValues: parsedFile.startingValues
@@ -174,8 +176,8 @@ class Index extends Component {
           <form onSubmit={this.handleSubmit}>
             {this.state.response && !this.state.error ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
               <button className={styles.submitButton}>Submit</button>
-              <label className={styles.xAxisLabel}>X-axis variable:</label>
-              <input  onChange={this.handleChange} placeholder="x" name="xAxis" type="text"></input>
+              {/* <label className={styles.xAxisLabel}>X-axis variable:</label> */}
+              {/* <input  onChange={this.handleChange} placeholder="x" name="xAxis" type="text"></input> */}
               <br/>
               <label className={styles.loopEditorLabel}>Model</label>
               <label className={styles.startEditorLabel}>Start instructions</label>
@@ -222,7 +224,7 @@ class Index extends Component {
       return (
           <React.Fragment>
             <button className={styles.submitButton} onClick={this.backToEditor}>←Back to editor</button>
-            <Graph res={this.state.response} xAxis={this.state.xAxisRes}/>
+            <Graph res={this.state.response}/>
           </React.Fragment>)
     }
   }
