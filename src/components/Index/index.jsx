@@ -174,7 +174,7 @@ class Index extends Component {
           :""}
 
           <form onSubmit={this.handleSubmit}>
-            {this.state.response && !this.state.error ? <button className={styles.submitButton} onClick={this.backToGraph}>←Back to graph</button> : ""}
+            {this.state.response && !this.state.error ? <button className={styles.submitButton} onClick={this.backToGraph}>← Back to graph</button> : ""}
               <button className={styles.submitButton}>Submit</button>
               {/* <label className={styles.xAxisLabel}>X-axis variable:</label> */}
               {/* <input  onChange={this.handleChange} placeholder="x" name="xAxis" type="text"></input> */}
@@ -223,7 +223,7 @@ class Index extends Component {
     } else if (this.state.stage === "graph") {
       return (
           <React.Fragment>
-            <button className={styles.submitButton} onClick={this.backToEditor}>←Back to editor</button>
+            <button className={styles.submitButton} onClick={this.backToEditor}>← Back to editor</button>
             <Graph res={this.state.response}/>
           </React.Fragment>)
     }

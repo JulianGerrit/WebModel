@@ -1,9 +1,17 @@
 import React, {Component} from "react";
 import styles from "./index.module.css";
-import {ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label} from 'recharts';
+import {ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label} from 'recharts';
 // import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 import Download from '@axetroy/react-download';
 
+class ChartPoint extends Component {
+    render(){
+        return(
+                // <circle cx="4" cy="4" r="4" />
+                null
+        );
+    }
+}
 
 export default class Graph extends Component {
 
@@ -32,14 +40,14 @@ export default class Graph extends Component {
                 linedata.push({x: xvar.data[i], y: yvar.data[i]});
                 csvdata[i+1].push(yvar.data[i]);
             }
-            result.push(<Scatter name={yvar.name} dataKey={yvar.name} data={linedata} fill={yvar.color.hex} line/>);
+            result.push(<Scatter legendType="line" name={yvar.name} dataKey={yvar.name} data={linedata} fill={yvar.color.hex} line shape={<ChartPoint/>}/>);
         }
 
         var csvstring = "";
         for(let i = 0; i < csvdata.length; i++){
-            if(i == 0){
+            if(i === 0){
                 csvstring += `${csvdata[i].join(',')}\n`;
-            }else if(i == (csvdata.length - 1)){
+            }else if(i === (csvdata.length - 1)){
                 csvstring += csvdata[i].join(',');
             }else{
                 csvstring += `${csvdata[i].join(',')}\n`;
@@ -97,22 +105,26 @@ export default class Graph extends Component {
 
             return (
                 <React.Fragment>
-                    <ScatterChart
-                        width={500}
-                        height={400}
-                        margin={{
-                            top: 20, right: 20, bottom: 20, left: 20,
-                        }}
-                    >
-                        <CartesianGrid/>
-                        <Tooltip/>
-                        <Legend />
-                        <XAxis type="number" dataKey="x" name={xvar.name}>
-                            <Label value={xvar.name} offset={0} position="insideBottom" />
-                        </XAxis>
-                        <YAxis type="number" dataKey="y"/>
-                        {result}
-                    </ScatterChart>
+                    <div className={styles.chartContainer}>
+                    <ResponsiveContainer width="80%" height="80%">
+                        <ScatterChart
+                            // width={500}
+                            // height={400}
+                            margin={{
+                                top: 20, right: 20, bottom: 20, left: 20,
+                            }}
+                        >
+                            <CartesianGrid/>
+                            <Tooltip/>
+                            <Legend />
+                            <XAxis type="number" dataKey="x" name={xvar.name}>
+                                <Label value={`${xvar.name} →`} offset={0} position="insideBottom" />
+                            </XAxis>
+                            <YAxis type="number" dataKey="y"/>
+                            {result}
+                        </ScatterChart>
+                    </ResponsiveContainer>
+                    </div>
                     
                     {/* <textarea>
                         {this.props.res.vars ? JSON.stringify(this.props.res.vars) : ""}

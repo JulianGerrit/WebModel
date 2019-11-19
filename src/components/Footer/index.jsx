@@ -12,11 +12,11 @@ export default function Footer() {
               <table>
                 <tr>
                   <td>Data calculator by Freek.</td>
-                  <td>Front-end by Julian.</td>
+                  <td>Web framework by Julian.</td>
                 </tr>
                 <tr>
-                  <td>Styling by Alex.</td>
-                  <td>Documentation by Frank.</td>
+                  <td>Front-end &amp; styling by Alex.</td>
+                  <td>Documentation and testing by Frank.</td>
                 </tr>
               </table>
               © 2019 Julian Gerritsen
