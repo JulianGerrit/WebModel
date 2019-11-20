@@ -1,5 +1,5 @@
 ﻿import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -11,10 +11,10 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar />
-        <Switch>
-          <Redirect exact path = "/" to = "/Index" />
-          <Route path = "/Index" component = { Index } />
-        </Switch>
+          <Switch>
+            <Redirect exact path = "/" to = "/Index" />
+            <Route path = "/Index" component = { Index } />
+          </Switch>
         <Footer />
       </React.Fragment>
     );

@@ -15,15 +15,21 @@ export default function Footer() {
                   <td>Web framework by Julian.</td>
                 </tr>
                 <tr>
-                  <td>Front-end styling by Alex.</td>
-                  <td>Documentation by Frank.</td>
+                  <td>Front-end &amp; styling by Alex.</td>
+                  <td>Documentation and testing by Frank.</td>
                 </tr>
               </table>
+              © 2019 Julian Gerritsen
             </p>
           </div>
           <div className="col-2">
             <ul className="list-unstyled">
               <li>
+                <a className={styles.footerlink} target="_BLANK" rel="noopener noreferrer" href="https://webmodel.readthedocs.io/">
+                  Documentation
+                </a>
+              </li>
+              {/* <li>
                 <a className={styles.footerlink} href="/">
                   Example Link
                 </a>
@@ -32,12 +38,7 @@ export default function Footer() {
                 <a className={styles.footerlink} href="/">
                   Example Link
                 </a>
-              </li>
-              <li>
-                <a className={styles.footerlink} href="/">
-                  Example Link
-                </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
