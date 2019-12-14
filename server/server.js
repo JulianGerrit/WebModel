@@ -3,9 +3,9 @@
 /**
  * Module dependencies.
  */
-
+const fs = require("fs");
 const debug = require("debug")("WebTemplateStudioExpress:server");
-const http = require("http");
+const https = require("https");
 const app = require("./app");
 const CONSTANTS = require("./constants");
 
@@ -20,7 +20,17 @@ app.set("port", port);
  * Create HTTP server.
  */
 
-const server = http.createServer(app);
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/juliangerritsen.nl/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/juliangerritsen.nl/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/juliangerritsen.nl/chain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
+const server = https.createServer(credentials, app);
 
 /**
  * Listen on provided port, on all network interfaces.
