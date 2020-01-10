@@ -31,8 +31,8 @@
     "nodemon": "^1.19.2"
   },
   "scripts": {
-    "start": "concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
-    "start-backend": "nodemon server/server.js",
+    "start-dev": "concurrently \"yarn start-frontend || npm run start-frontend\" \"yarn start-backend || npm run start-backend\"",
+    "start-prod": "nodemon server/server.js > serverlogs.txt",
     "start-frontend": "react-scripts start",
     "build": "node ./buildScript",
     "test": "react-scripts test",

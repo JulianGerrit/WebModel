@@ -40,6 +40,7 @@ class Index extends Component {
 
       fetch('/Index', {
         method: 'POST',
+	mode: 'cors',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
           loopCode: this.state.loopCode,
